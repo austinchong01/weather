@@ -1,23 +1,21 @@
 import "./styles.css";
 
-function clearDOM(time, temperature, cloud, precipitation) {
-  time.innerHTML = "";
+function clearDOM(address, temperature, cloud, precipitation) {
+  address.innerHTML = "";
   temperature.innerHTML = "";
   cloud.innerHTML = "";
   precipitation.innerHTML = "";
 }
 
-function renderDOM(currentConditions) {
-  const content = document.querySelector("#content");
-
-  const time = document.querySelector("#time");
+function renderDOM(resolvedAddress, currentConditions) {
+  const address = document.querySelector("#address");
   const temperature = document.querySelector("#temperature");
   const cloud = document.querySelector("#cloud");
   const precipitation = document.querySelector("#precipitation");
 
-  clearDOM(time, temperature, cloud, precipitation);
+  clearDOM(address, temperature, cloud, precipitation);
 
-  time.innerHTML = `Time: ${currentConditions.datetime}`;
+  address.innerHTML = `Address: ${resolvedAddress}`;
   temperature.innerHTML = `Temperature: ${currentConditions.temp}`;
   cloud.innerHTML = `Cloud Status: ${currentConditions.conditions}`;
   if (currentConditions.preciptype === null) {
@@ -34,10 +32,9 @@ async function processData(location) {
       { mode: "cors" },
     );
     const responseJSON = await response.json();
-    const { currentConditions } = responseJSON;
+    const { currentConditions, resolvedAddress } = responseJSON;
 
-    renderDOM(currentConditions);
-    console.log(currentConditions);
+    renderDOM(resolvedAddress, currentConditions);
   } catch (error) {
     console.log(error);
   }
@@ -49,6 +46,7 @@ function search() {
   const location = input.value;
   processData(location);
   input.value = "";
+  input.focus();
 }
 
 const searchBtn = document.querySelector("#search");
