@@ -1,4 +1,8 @@
 import "./styles.css";
+import sunny from "./images/sunny.svg";
+import clouds from "./images/clouds.svg";
+import rain from "./images/rain.svg";
+import snow from "./images/snow.svg";
 
 function clearDOM(address, temperature, cloud, precipitation) {
   address.innerHTML = "";
@@ -16,12 +20,25 @@ function renderDOM(resolvedAddress, currentConditions) {
   clearDOM(address, temperature, cloud, precipitation);
 
   address.innerHTML = `${resolvedAddress}`;
-  temperature.innerHTML = `${currentConditions.temp}`;
-  cloud.innerHTML = `${currentConditions.conditions}`;
-  if (currentConditions.preciptype === null) {
-    precipitation.innerHTML = "Precipitation: None";
+  temperature.innerHTML = `${currentConditions.temp}&deg;`;
+
+  const condition = document.createElement("img");
+  if (currentConditions.conditions === "Clear"){
+    condition.src = sunny;
   } else {
-    precipitation.innerHTML = `Precipitation: ${currentConditions.preciptype}`;
+    condition.src = clouds;
+  }
+  cloud.appendChild(condition);
+
+  const precip = document.createElement("img");
+  if (currentConditions.preciptype === "Snow") {
+    precip.src = snow;
+    precipitation.appendChild(precip);
+  } else if (currentConditions.preciptype === "Rain") {
+    precip.src = rain;
+    precipitation.appendChild(precip);
+  } else {
+    precipitation.innerHTML = `No Precipitation`;
   }
 }
 
