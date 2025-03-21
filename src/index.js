@@ -15,9 +15,9 @@ function renderDOM(resolvedAddress, currentConditions) {
 
   clearDOM(address, temperature, cloud, precipitation);
 
-  address.innerHTML = `Address: ${resolvedAddress}`;
-  temperature.innerHTML = `Temperature: ${currentConditions.temp}`;
-  cloud.innerHTML = `Cloud Status: ${currentConditions.conditions}`;
+  address.innerHTML = `${resolvedAddress}`;
+  temperature.innerHTML = `${currentConditions.temp}`;
+  cloud.innerHTML = `${currentConditions.conditions}`;
   if (currentConditions.preciptype === null) {
     precipitation.innerHTML = "Precipitation: None";
   } else {
